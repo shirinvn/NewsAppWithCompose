@@ -6,4 +6,5 @@ object Dimans {
 
     val MediumPadding= 24.dp;
     val MediumPadding2= 30.dp;
+    val IndicatorSize= 40.dp;
 }
