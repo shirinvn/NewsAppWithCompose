@@ -26,6 +26,7 @@ Column(modifier = Modifier.fillMaxSize()) {
                 0-> listOf("","Next")
                 1 -> listOf("Back", "Next")
                 2 -> listOf("back", "Get Started")
+
                 else -> listOf("","")
             }
         }
