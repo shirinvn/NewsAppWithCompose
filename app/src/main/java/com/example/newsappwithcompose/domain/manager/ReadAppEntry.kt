@@ -6,7 +6,7 @@ class ReadAppEntry(
 
 private val localUserManager: UserManager
 ){
-    suspend operator fun invoke(): Flow<Boolean>{
+     operator fun invoke(): Flow<Boolean>{
       return  localUserManager.readAppEntry()
     }
 
