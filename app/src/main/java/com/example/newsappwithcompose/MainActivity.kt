@@ -14,9 +14,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import com.example.newsappwithcompose.domain.manager.AppEntryUseCases
 import com.example.newsappwithcompose.presentation.onboarding.OnBoardingScreen
+import com.example.newsappwithcompose.presentation.onboarding.OnBoardingViewModel
 import com.example.newsappwithcompose.ui.theme.NewsAppWithComposeTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -27,21 +29,25 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var appEntryUseCases: AppEntryUseCases
-
+    lateinit var usecases: AppEntryUseCases
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         installSplashScreen()
+
         lifecycleScope.launch {
-            appEntryUseCases.readAppEntry().collect{
+            usecases.readAppEntry().collect{
 
             }
         }
         setContent {
             NewsAppWithComposeTheme {
                    Box(modifier = Modifier.background(MaterialTheme.colorScheme.background))
-                    OnBoardingScreen()
+                  val viewmodel : OnBoardingViewModel= hiltViewModel()
+                    OnBoardingScreen(
+                        event =
+                            viewmodel:: onEvent
+                    )
             }
         }
     }
