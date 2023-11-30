@@ -8,6 +8,8 @@ object Dimans {
     val MediumPadding2= 30.dp;
     val ArticleCardSize= 96.dp;
     val ExtraSmallPadding= 3.dp;
+    val ExtraSmallPadding2= 6.dp;
+    val SmallIconSize= 11.dp;
 
     val IndicatorSize= 40.dp;
 }
