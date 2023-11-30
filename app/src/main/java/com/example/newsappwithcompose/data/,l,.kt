@@ -1,4 +1,4 @@
 package com.example.newsappwithcompose.data
 
-class ,l, {
+class Hellp {
 }
