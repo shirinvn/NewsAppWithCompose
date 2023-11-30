@@ -2,9 +2,9 @@ package com.example.newsappwithcompose.di
 
 import android.app.Application
 import com.example.newsappwithcompose.data.manager.LoaclUserManagerImpl
-import com.example.newsappwithcompose.domain.manager.AppEntryUseCases
-import com.example.newsappwithcompose.domain.manager.ReadAppEntry
-import com.example.newsappwithcompose.domain.manager.SaveAppEntry
+import com.example.newsappwithcompose.domain.usecase.app_entry.AppEntryUseCases
+import com.example.newsappwithcompose.domain.usecase.app_entry.ReadAppEntry
+import com.example.newsappwithcompose.domain.usecase.app_entry.SaveAppEntry
 import com.example.newsappwithcompose.domain.manager.UserManager
 import dagger.Module
 import dagger.Provides
