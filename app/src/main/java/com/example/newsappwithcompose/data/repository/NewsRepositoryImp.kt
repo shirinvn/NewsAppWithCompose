@@ -25,7 +25,7 @@ class NewsRepositoryImp (
        ).flow
     }
 
-    override fun searchNews(searchQuery: Flow<PagingData<Article>>, sources: List<String>): Flow<PagingData<Article>> {
+    override fun searchNews(searchQuery: String, sources: List<String>): Flow<PagingData<Article>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {

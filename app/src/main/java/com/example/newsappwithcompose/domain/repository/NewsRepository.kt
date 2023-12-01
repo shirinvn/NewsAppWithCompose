@@ -9,5 +9,5 @@ interface NewsRepository {
     fun getNews( sources : List<String>) :Flow<PagingData<Article>>
 
 
-    fun searchNews(searchQuery: Flow<PagingData<Article>>, sources: List<String>): Flow<PagingData<Article>>
+    fun searchNews(searchQuery: String, sources: List<String>): Flow<PagingData<Article>>
 }
