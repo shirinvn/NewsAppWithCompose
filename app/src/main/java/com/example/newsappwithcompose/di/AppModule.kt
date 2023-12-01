@@ -11,6 +11,7 @@ import com.example.newsappwithcompose.domain.manager.UserManager
 import com.example.newsappwithcompose.domain.repository.NewsRepository
 import com.example.newsappwithcompose.domain.usecase.news.GetNews
 import com.example.newsappwithcompose.domain.usecase.news.NewCases
+import com.example.newsappwithcompose.presentation.search.SearchNews
 import com.example.newsappwithcompose.util.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
@@ -67,7 +68,8 @@ fun provideNewsUseCases
 : NewCases{
     return NewCases(
         getNews = GetNews(newsRepository =
-        newsRepository)
+        newsRepository),
+        searchNews = SearchNews(newsRepository)
 
     )
 }

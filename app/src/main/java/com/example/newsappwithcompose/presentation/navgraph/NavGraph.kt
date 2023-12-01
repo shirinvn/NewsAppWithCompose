@@ -12,6 +12,8 @@ import com.example.newsappwithcompose.presentation.home.HomeScreen
 import com.example.newsappwithcompose.presentation.home.HomeViewModel
 import com.example.newsappwithcompose.presentation.onboarding.OnBoardingScreen
 import com.example.newsappwithcompose.presentation.onboarding.OnBoardingViewModel
+import com.example.newsappwithcompose.presentation.search.SearchScreen
+import com.example.newsappwithcompose.presentation.search.SearchViewModel
 import kotlinx.coroutines.flow.collectIndexed
 
 @Composable
@@ -40,10 +42,9 @@ fun NavGraph(
         ){
             composable(route= Route.NewsNavigationScreen.route){
 
-                val viewMOdel:HomeViewModel= hiltViewModel()
-                val articles= viewMOdel.news.collectAsLazyPagingItems()
-                HomeScreen(article = articles, navigate = {})
-            }
+                val viewModel:SearchViewModel= hiltViewModel()
+            SearchScreen(state =viewModel.state.value , event =
+                viewModel::onEvent, navigate ={} )}
         }
     }
 
