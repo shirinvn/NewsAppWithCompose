@@ -35,7 +35,7 @@ fun NavGraph(
             }
         }
         navigation(
-            route= Route.NewsNavigationScreen.route,
+            route= Route.NewsNavigation.route,
             startDestination = Route.NewsNavigationScreen.route
         ){
             composable(route= Route.NewsNavigationScreen.route){
