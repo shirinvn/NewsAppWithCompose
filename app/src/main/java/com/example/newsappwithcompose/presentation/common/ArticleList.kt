@@ -19,12 +19,31 @@ import com.example.newsappwithcompose.presentation.Dimans.MediumPadding
 @Composable
 fun ArticleList(
     modifier: Modifier=Modifier,
+    article: List<Article>,
+    onClick:(Article) -> Unit
+){
+
+        LazyColumn(modifier= modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(MediumPadding),
+            contentPadding = PaddingValues(all = ExtraSmallPadding2)
+        ){
+            items(count = article.size){
+              val article=   article[it]
+                    ArticalCard(article = article, onClick = {onClick(article)})
+                }
+            }
+        }
+
+
+@Composable
+fun ArticleList(
+    modifier: Modifier=Modifier,
     article: LazyPagingItems<Article>,
     onClick:(Article) -> Unit
 ){
     val handlePagingresult = handlePagingResult(article = article)
     if (handlePagingresult){
-        LazyColumn(modifier= Modifier.fillMaxSize(),
+        LazyColumn(modifier= modifier.fillMaxSize(),
            verticalArrangement = Arrangement.spacedBy(MediumPadding),
             contentPadding = PaddingValues(all = ExtraSmallPadding2)
         ){

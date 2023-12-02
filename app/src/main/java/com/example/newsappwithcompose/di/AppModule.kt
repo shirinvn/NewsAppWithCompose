@@ -13,8 +13,11 @@ import com.example.newsappwithcompose.domain.usecase.app_entry.ReadAppEntry
 import com.example.newsappwithcompose.domain.usecase.app_entry.SaveAppEntry
 import com.example.newsappwithcompose.domain.manager.UserManager
 import com.example.newsappwithcompose.domain.repository.NewsRepository
+import com.example.newsappwithcompose.domain.usecase.news.DeleteArticle
 import com.example.newsappwithcompose.domain.usecase.news.GetNews
 import com.example.newsappwithcompose.domain.usecase.news.NewCases
+import com.example.newsappwithcompose.domain.usecase.news.SelectArticles
+import com.example.newsappwithcompose.domain.usecase.news.UpsertArticle
 import com.example.newsappwithcompose.presentation.search.SearchNews
 import com.example.newsappwithcompose.util.Constants.BASE_URL
 import com.example.newsappwithcompose.util.Constants.DATA_BASE_NAME
@@ -69,12 +72,16 @@ fun provideNewsRepository(newsApi: NewsApi)
 @Provides
 @Singleton
 fun provideNewsUseCases
-            (newsRepository: NewsRepository)
+            (newsRepository: NewsRepository,
+             newsDao: NewsDao)
 : NewCases{
     return NewCases(
         getNews = GetNews(newsRepository =
         newsRepository),
-        searchNews = SearchNews(newsRepository)
+        searchNews = SearchNews(newsRepository),
+        upsertArticle = UpsertArticle(newsDao),
+        deleteArticle = DeleteArticle(newsDao),
+        selectArticles = SelectArticles(newsDao)
 
     )
 }

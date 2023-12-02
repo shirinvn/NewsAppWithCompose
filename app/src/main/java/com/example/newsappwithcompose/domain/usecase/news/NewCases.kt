@@ -5,5 +5,8 @@ import com.example.newsappwithcompose.presentation.search.SearchNews
 
 data class NewCases(
     val getNews :GetNews,
-    val searchNews : SearchNews
+    val searchNews : SearchNews,
+    val upsertArticle: UpsertArticle,
+    val deleteArticle: DeleteArticle,
+    val selectArticles: SelectArticles
 )

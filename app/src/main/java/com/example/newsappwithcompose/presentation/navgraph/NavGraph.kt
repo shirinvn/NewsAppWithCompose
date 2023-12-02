@@ -8,6 +8,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.newsappwithcompose.presentation.bookmark.BookMarkScreen
+import com.example.newsappwithcompose.presentation.bookmark.BookMarkViewModel
 import com.example.newsappwithcompose.presentation.home.HomeScreen
 import com.example.newsappwithcompose.presentation.home.HomeViewModel
 import com.example.newsappwithcompose.presentation.onboarding.OnBoardingScreen
@@ -22,32 +24,32 @@ fun NavGraph(
 ){
     val navController = rememberNavController()
     NavHost(navController =navController
-        , startDestination = startDestination){
+        , startDestination = startDestination) {
 
         navigation(
-            route=Route.AppStartingNavigation.route,
+            route = Route.AppStartingNavigation.route,
             startDestination = Route.OnBoardingScreen.route
-        ){
+        ) {
             composable(
-                route= Route.OnBoardingScreen.route
-            ){
+                route = Route.OnBoardingScreen.route
+            ) {
                 val viewModel: OnBoardingViewModel = hiltViewModel()
                 OnBoardingScreen(event = viewModel::onEvent)
 
             }
         }
         navigation(
-            route= Route.NewsNavigation.route,
+            route = Route.NewsNavigation.route,
             startDestination = Route.NewsNavigationScreen.route
-        ){
-            composable(route= Route.NewsNavigationScreen.route){
+        ) {
+            composable(route = Route.NewsNavigationScreen.route) {
 
-                val viewModel:SearchViewModel= hiltViewModel()
-            SearchScreen(state =viewModel.state.value , event =
-                viewModel::onEvent, navigate ={} )}
+                val viewModel: BookMarkViewModel = hiltViewModel()
+                BookMarkScreen(state = viewModel.state.value,
+                    navigate = {
+                    })
+            }
         }
+
     }
-
-
-
-}
+    }
