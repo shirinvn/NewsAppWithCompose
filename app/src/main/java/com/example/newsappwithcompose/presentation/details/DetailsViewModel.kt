@@ -23,7 +23,6 @@ class DetailsViewModel @Inject constructor(
     fun onEvent(event: DetailEvent){
         when(event){
             is DetailEvent.UpsertDeleteArticle-> {
-                val article = newsCases.
             }
         }
     }
