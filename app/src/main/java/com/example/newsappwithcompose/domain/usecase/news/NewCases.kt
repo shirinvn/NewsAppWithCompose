@@ -8,5 +8,6 @@ data class NewCases(
     val searchNews : SearchNews,
     val upsertArticle: UpsertArticle,
     val deleteArticle: DeleteArticle,
-    val selectArticles: SelectArticles
+    val selectArticles: SelectArticles,
+    val selectArticle: SelectArticles
 )

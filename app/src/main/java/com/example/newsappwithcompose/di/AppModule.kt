@@ -81,7 +81,8 @@ fun provideNewsUseCases
         searchNews = SearchNews(newsRepository),
         upsertArticle = UpsertArticle(newsDao),
         deleteArticle = DeleteArticle(newsDao),
-        selectArticles = SelectArticles(newsDao)
+        selectArticles = SelectArticles(newsDao),
+        selectArticle = SelectArticles(newsDao)
 
     )
 }
