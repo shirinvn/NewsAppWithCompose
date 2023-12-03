@@ -25,7 +25,6 @@ import com.example.newsappwithcompose.domain.model.Article
 import com.example.newsappwithcompose.presentation.Dimans.ArticleImageHeight
 import com.example.newsappwithcompose.presentation.Dimans.MediumPadding
 import com.example.newsappwithcompose.presentation.details.components.DetailTopBar
-import com.example.newsappwithcompose.presentation.navgraph.Route
 
 
 @Composable
@@ -61,7 +60,7 @@ fun DetailScreen (
                     }
                 }
             },
-            onBookmarkClicks = { event(DetailEvent.SaveArticle) },
+            onBookmarkClicks = { event(DetailEvent.UpsertDeleteArticle) },
             onBackClicks = navigateUp
         )
         LazyColumn(
