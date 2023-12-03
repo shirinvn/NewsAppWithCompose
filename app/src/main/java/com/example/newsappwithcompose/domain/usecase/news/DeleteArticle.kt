@@ -15,4 +15,3 @@ class DeleteArticle (
             newsDao.delete(article)
         }
     }
-}
