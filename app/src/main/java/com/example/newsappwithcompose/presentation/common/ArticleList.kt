@@ -14,79 +14,92 @@ import androidx.paging.compose.LazyPagingItems
 import com.example.newsappwithcompose.domain.model.Article
 import com.example.newsappwithcompose.presentation.Dimans.ExtraSmallPadding2
 import com.example.newsappwithcompose.presentation.Dimans.MediumPadding
+import com.example.newsappwithcompose.presentation.home.component.ArticleCard
 
 
 @Composable
-fun ArticleList(
-    modifier: Modifier=Modifier,
-    article: List<Article>,
-    onClick:(Article) -> Unit
-){
-
-        LazyColumn(modifier= modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.spacedBy(MediumPadding),
-            contentPadding = PaddingValues(all = ExtraSmallPadding2)
-        ){
-            items(count = article.size){
-              val article=   article[it]
-                    ArticalCard(article = article, onClick = {onClick(article)})
-                }
-            }
-        }
-
-
-@Composable
-fun ArticleList(
-    modifier: Modifier=Modifier,
-    article: LazyPagingItems<Article>,
-    onClick:(Article) -> Unit
-){
-    val handlePagingresult = handlePagingResult(article = article)
-    if (handlePagingresult){
-        LazyColumn(modifier= modifier.fillMaxSize(),
-           verticalArrangement = Arrangement.spacedBy(MediumPadding),
-            contentPadding = PaddingValues(all = ExtraSmallPadding2)
-        ){
-            items(count = article.itemCount){
-                article[it]?.let{
-                    ArticalCard(article = it, onClick = {onClick(it)})
-                }
+fun ArticlesList(
+    modifier: Modifier = Modifier,
+    articles: List<Article>,
+    onClick: (Article) -> Unit
+) {
+    if (articles.isEmpty()){
+        EmptyScreen()
+    }
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.spacedBy(MediumPadding),
+        contentPadding = PaddingValues(all = ExtraSmallPadding2)
+    ) {
+        items(
+            count = articles.size,
+        ) {
+            articles[it]?.let { article ->
+                ArticleCard(article = article, onClick = { onClick(article) })
             }
         }
     }
 
 }
-@Composable
-fun handlePagingResult(
-    article: LazyPagingItems<Article>,
 
-    ): Boolean {
-    val loadState = article.loadState
-    val error= when{
+@Composable
+fun ArticlesList(
+    modifier: Modifier = Modifier,
+    articles: LazyPagingItems<Article>,
+    onClick: (Article) -> Unit
+) {
+
+    val handlePagingResult = handlePagingResult(articles)
+
+
+    if (handlePagingResult) {
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.spacedBy(MediumPadding),
+            contentPadding = PaddingValues(all = ExtraSmallPadding2)
+        ) {
+            items(
+                count = articles.itemCount,
+            ) {
+                articles[it]?.let { article ->
+                    ArticleCard(article = article, onClick = { onClick(article) })
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun handlePagingResult(articles: LazyPagingItems<Article>): Boolean {
+    val loadState = articles.loadState
+    val error = when {
         loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
         loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
         loadState.append is LoadState.Error -> loadState.append as LoadState.Error
-   else -> null
+        else -> null
     }
-    return when
-    {
+
+    return when {
         loadState.refresh is LoadState.Loading -> {
             ShimmerEffect()
             false
         }
+
         error != null -> {
-            EmptyScreen()
+            EmptyScreen(error = error)
             false
         }
-        else
-            -> true
+
+        else -> {
+            true
+        }
     }
 }
 
 @Composable
-private fun ShimmerEffect(){
-    Column(verticalArrangement = Arrangement.spacedBy(MediumPadding)){
-        repeat(10){
+fun ShimmerEffect() {
+    Column(verticalArrangement = Arrangement.spacedBy(MediumPadding)) {
+        repeat(10) {
             ArticleCardShimmerEffect(
                 modifier = Modifier.padding(horizontal = MediumPadding)
             )
