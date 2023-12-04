@@ -74,12 +74,10 @@ fun provideNewsRepository(newsApi: NewsApi,
 @Provides
 @Singleton
 fun provideNewsUseCases
-            (newsRepository: NewsRepository,
-             newsDao: NewsDao)
+            (newsRepository: NewsRepository)
 : NewCases{
     return NewCases(
-        getNews = GetNews(newsRepository =
-        newsRepository),
+        getNews = GetNews(newsRepository),
         searchNews = SearchNews(newsRepository),
         upsertArticle = UpsertArticle(newsRepository),
         deleteArticle = DeleteArticle(newsRepository),
