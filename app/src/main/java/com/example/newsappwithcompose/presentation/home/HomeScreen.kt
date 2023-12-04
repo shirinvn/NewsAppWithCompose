@@ -34,7 +34,8 @@ import com.example.newsappwithcompose.presentation.navgraph.Route
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
-    article: LazyPagingItems<Article>, navigate: (String)-> Unit
+    article: LazyPagingItems<Article>, navigateToSearch: ()-> Unit,
+    navigateToDetails : (Article) -> Unit
 ){
     val titles by remember {
         derivedStateOf {
@@ -72,8 +73,7 @@ fun HomeScreen(
 
             },
             onClick = {
-                navigate(Route.SearchScreen.route)
-            }
+navigateToSearch            }
         )
         Spacer(modifier = Modifier.height(MediumPadding))
 
@@ -93,7 +93,7 @@ fun HomeScreen(
             ,
             article = article,
             onClick = {
-                navigate(Route.DetailScreen.route)
+               navigateToDetails
             })
 
     }

@@ -60,7 +60,7 @@ fun DetailScreen (
                     }
                 }
             },
-            onBookmarkClicks = { event(DetailEvent.UpsertDeleteArticle) },
+            onBookmarkClicks = { event(DetailEvent.UpsertDeleteArticle(article)) },
             onBackClicks = navigateUp
         )
         LazyColumn(
