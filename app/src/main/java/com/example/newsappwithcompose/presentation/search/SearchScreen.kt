@@ -11,38 +11,40 @@ import androidx.compose.ui.Modifier
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.newsappwithcompose.domain.model.Article
 import com.example.newsappwithcompose.presentation.Dimans.MediumPadding
-import com.example.newsappwithcompose.presentation.common.ArticleList
+import com.example.newsappwithcompose.presentation.common.ArticlesList
 import com.example.newsappwithcompose.presentation.common.SearchBar
+
+
+
 
 
 @Composable
 fun SearchScreen(
     state: SearchState,
-    event: (SearchEvent) -> Unit,
-    navigateToDetails : (Article) -> Unit
-){
+    event:(SearchEvent) -> Unit,
+    navigateToDetails:(Article) -> Unit
+) {
 
     Column(
         modifier = Modifier
-            .padding(
-                top = MediumPadding,
-                start = MediumPadding,
-                end = MediumPadding
-            )
+            .padding(top = MediumPadding, start = MediumPadding, end = MediumPadding)
             .statusBarsPadding()
-            .fillMaxSize()
     ) {
-        SearchBar(text =state.searchQuery
-            , readOnly =false
-            , onValueChange ={event(SearchEvent.UpdateSearchQuery(it))},
-            onSearch = {event(SearchEvent.SearchNews)}
+        SearchBar(
+            text = state.searchQuery,
+            readOnly = false,
+            onValueChange = { event(SearchEvent.UpdateSearchQuery(it)) },
+            onSearch = {
+                event(SearchEvent.SearchNews)
+            }
         )
-
         Spacer(modifier = Modifier.height(MediumPadding))
         state.articles?.let {
-            val article= it.collectAsLazyPagingItems()
-            ArticleList(article = article, onClick = {navigateToDetails(it)
-            })
+            val articles = it.collectAsLazyPagingItems()
+            ArticlesList(
+                articles = articles,
+                onClick = navigateToDetails
+            )
         }
     }
 }
