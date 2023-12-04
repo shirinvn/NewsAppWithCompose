@@ -6,41 +6,40 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import androidx.navigation.compose.rememberNavController
-import com.example.newsappwithcompose.presentation.bookmark.BookMarkScreen
-import com.example.newsappwithcompose.presentation.bookmark.BookMarkViewModel
+import com.example.newsappwithcompose.data.manager.NewsConnectivityManger
 import com.example.newsappwithcompose.presentation.newsnavigator.NewsNavigator
 import com.example.newsappwithcompose.presentation.onboarding.OnBoardingScreen
 import com.example.newsappwithcompose.presentation.onboarding.OnBoardingViewModel
 
+
+
 @Composable
 fun NavGraph(
-    startDestination: String
-){
+    startDestination: String,
+    newsConnectivityManger: NewsConnectivityManger
+) {
     val navController = rememberNavController()
-    NavHost(navController =navController
-        , startDestination = startDestination) {
 
+    NavHost(navController = navController, startDestination = startDestination) {
         navigation(
-            route = Route.AppStartingNavigation.route,
+            route = Route.AppStartNavigation.route,
             startDestination = Route.OnBoardingScreen.route
         ) {
-            composable(
-                route = Route.OnBoardingScreen.route
-            ) {
+            composable(route = Route.OnBoardingScreen.route) {
                 val viewModel: OnBoardingViewModel = hiltViewModel()
-                OnBoardingScreen(event = viewModel::onEvent)
-
+                OnBoardingScreen(onEvent = viewModel::onEvent)
             }
         }
+
         navigation(
             route = Route.NewsNavigation.route,
-            startDestination = Route.NewsNavigationScreen.route
+            startDestination = Route.NewsNavigatorScreen.route
         ) {
-            composable(route = Route.NewsNavigationScreen.route) {
-
-               NewsNavigator()
+            composable(route = Route.NewsNavigatorScreen.route){
+                NewsNavigator(
+                    newsConnectivityManger
+                )
             }
         }
-
     }
-    }
+}
