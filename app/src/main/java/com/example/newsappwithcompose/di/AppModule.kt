@@ -16,6 +16,7 @@ import com.example.newsappwithcompose.domain.repository.NewsRepository
 import com.example.newsappwithcompose.domain.usecase.news.DeleteArticle
 import com.example.newsappwithcompose.domain.usecase.news.GetNews
 import com.example.newsappwithcompose.domain.usecase.news.NewCases
+import com.example.newsappwithcompose.domain.usecase.news.SelectArticle
 import com.example.newsappwithcompose.domain.usecase.news.SelectArticles
 import com.example.newsappwithcompose.domain.usecase.news.UpsertArticle
 import com.example.newsappwithcompose.presentation.search.SearchNews
@@ -83,7 +84,7 @@ fun provideNewsUseCases
         upsertArticle = UpsertArticle(newsRepository),
         deleteArticle = DeleteArticle(newsRepository),
         selectArticles = SelectArticles(newsRepository),
-        selectArticle = SelectArticles(newsRepository)
+        selectArticle = SelectArticle(newsRepository)
 
     )
 }
