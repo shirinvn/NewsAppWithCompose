@@ -3,6 +3,7 @@ package com.example.newsappwithcompose.presentation.bookmark
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -15,33 +16,33 @@ import androidx.compose.ui.text.font.FontWeight
 import com.example.newsappwithcompose.R
 import com.example.newsappwithcompose.domain.model.Article
 import com.example.newsappwithcompose.presentation.Dimans.MediumPadding
-import com.example.newsappwithcompose.presentation.common.ArticleList
-import com.example.newsappwithcompose.presentation.navgraph.Route
+import com.example.newsappwithcompose.presentation.common.ArticlesList
 
 @Composable
-fun BookMarkScreen(
-    state: BookMarkState,
-    navigateToDetails : (Article) -> Unit
+fun BookmarkScreen(
+    state: BookmarkState,
+    navigateToDetails: (Article) -> Unit
 ) {
-
-    Column (
+    Column(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .statusBarsPadding()
-            .padding(
-                top = MediumPadding,
-                start = MediumPadding,
-                end = MediumPadding
+            .padding(top = MediumPadding, start = MediumPadding, end = MediumPadding)
+    ) {
+
+        Text(
+            text = "Bookmark",
+            style = MaterialTheme.typography.displayMedium.copy(fontWeight = FontWeight.Bold),
+            color = colorResource(
+                id = R.color.text_title
             )
-    ){
-        Text(text = "BookMark",
-            style = MaterialTheme.typography.displayMedium
-                .copy(fontWeight = FontWeight.Bold),
-            color= colorResource(id = R.color.text_title))
+        )
 
         Spacer(modifier = Modifier.height(MediumPadding))
 
-        ArticleList(article = state.article, onClick =
-        {navigateToDetails(it)})
+        ArticlesList(
+            articles = state.articles,
+            onClick = navigateToDetails
+        )
     }
 }

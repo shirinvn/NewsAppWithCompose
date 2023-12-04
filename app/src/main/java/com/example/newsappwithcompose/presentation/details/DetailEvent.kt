@@ -2,10 +2,10 @@ package com.example.newsappwithcompose.presentation.details
 
 import com.example.newsappwithcompose.domain.model.Article
 
-sealed class DetailEvent {
 
+sealed class DetailsEvent {
+    data class UpsertDeleteArticle(val article: Article) : DetailsEvent()
 
-    data class UpsertDeleteArticle (val article: Article): DetailEvent()
+    object RemoveSideEffect : DetailsEvent()
 
-    object RemoveSideEffect : DetailEvent()
 }
