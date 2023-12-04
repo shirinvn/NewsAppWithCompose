@@ -27,43 +27,49 @@ import com.example.newsappwithcompose.presentation.onboarding.pages
 import com.example.newsappwithcompose.ui.theme.NewsAppWithComposeTheme
 import org.w3c.dom.Text
 
+
+
 @Composable
 fun OnBoardingPage(
-    modifier :Modifier= Modifier,
-    page: Page
-
-){
-
-    Column (modifier= modifier){
-        Image(painter = painterResource(id = page.img), 
-            contentDescription =null,
-            contentScale = ContentScale.Crop,
+    modifier: Modifier = Modifier,
+    page: Page,
+) {
+    Column(modifier = modifier) {
+        Image(
             modifier = Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(fraction = 0.6f))
+                .fillMaxHeight(0.60f),
+            painter = painterResource(id = page.image),
+            contentDescription = null,
+            contentScale = ContentScale.Crop
+        )
+        Spacer(modifier = Modifier.height(MediumPadding))
+        Text(
+            modifier = Modifier.padding(horizontal = MediumPadding2),
+            text = page.title,
+            style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold),
+            color = colorResource(id = R.color.display_small)
+        )
+        Text(
+            modifier = Modifier.padding(horizontal = MediumPadding2),
+            text = page.description,
+            style = MaterialTheme.typography.bodyMedium,
+            color = colorResource(id = R.color.text_medium)
+        )
     }
-    Spacer(modifier = Modifier.height(MediumPadding))
-    Text(text= page.title, modifier
-        .padding(horizontal = MediumPadding2),
-        style= MaterialTheme.typography.displaySmall
-            .copy(fontWeight = FontWeight.Bold),
-        color = colorResource(id = R.color.purple_200) )
-
-
-    Text(text= page.des, modifier
-        .padding(horizontal = MediumPadding2),
-        style= MaterialTheme.typography.displaySmall
-            .copy(fontWeight = FontWeight.Bold),
-        color = colorResource(id = R.color.purple_700) )
 }
 
 @Preview(showBackground = true)
-@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun OnBoardingPagePreview(){
+fun OnBoardingPagePreview() {
     NewsAppWithComposeTheme {
-        OnBoardingPage(page =
-            pages[0]
+        OnBoardingPage(
+            page = Page(
+                title = "Lorem Ipsum is simply dummy",
+                description = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+                image = R.drawable.onboarding1
+            )
         )
     }
 }

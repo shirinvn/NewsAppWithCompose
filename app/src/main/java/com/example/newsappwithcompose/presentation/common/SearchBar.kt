@@ -1,8 +1,10 @@
 package com.example.newsappwithcompose.presentation.common
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.border
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -31,82 +33,95 @@ import com.example.newsappwithcompose.R
 import com.example.newsappwithcompose.presentation.Dimans.IconSize
 import com.example.newsappwithcompose.ui.theme.NewsAppWithComposeTheme
 
+
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchBar(
-    modifier: Modifier= Modifier,
-    text:String,
+    modifier: Modifier = Modifier,
+    text: String,
     readOnly: Boolean,
-    onClick: (()-> Unit)?= null,
+    onClick: (() -> Unit)? = null,
     onValueChange: (String) -> Unit,
-    onSearch:() -> Unit
+    onSearch: () -> Unit
+) {
 
-){
-    val inteeractionSource= remember {
-
+    val interactionSource = remember {
         MutableInteractionSource()
     }
-    val isClicked= inteeractionSource.collectIsFocusedAsState().value
-
+    val isClicked = interactionSource.collectIsPressedAsState().value
     LaunchedEffect(key1 = isClicked){
-        if (isClicked){
+        if(isClicked){
             onClick?.invoke()
         }
     }
-    Box(modifier = modifier){
-        TextField(value = text,
+
+    Box(modifier = modifier) {
+        TextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .searchBarBorder(),
+                .searchBar(),
+            value = text,
             onValueChange = onValueChange,
             readOnly = readOnly,
             leadingIcon = {
-                Icon(painter = painterResource(
-                    id = R.drawable.ic_search),
-                    contentDescription =null ,
-                    modifier= Modifier.size(IconSize),
-                    tint = colorResource(id = R.color.body))
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_search),
+                    contentDescription = null,
+                    modifier = Modifier.size(IconSize),
+                    tint = colorResource(id = R.color.body)
+                )
             },
             placeholder = {
-                Text(text = "Search", style = MaterialTheme.typography.bodySmall, color = colorResource(
-                    id = R.color.placeholder
-                ))
+                Text(
+                    text = "Search",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = colorResource(id = R.color.placeholder)
+                )
             },
             shape = MaterialTheme.shapes.medium,
             colors = TextFieldDefaults.textFieldColors(
                 containerColor = colorResource(id = R.color.input_background),
-                textColor = if (isSystemInDarkTheme())Color.White else Color.Black
-                , cursorColor = if (isSystemInDarkTheme())Color.White else
-                Color.Black,
+                textColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
+                cursorColor = if (isSystemInDarkTheme()) Color.White else Color.Black,
                 disabledIndicatorColor = Color.Transparent,
                 errorIndicatorColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
             singleLine = true,
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search)
-            ,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
             keyboardActions = KeyboardActions(
                 onSearch = {
                     onSearch()
                 }
             ),
             textStyle = MaterialTheme.typography.bodySmall,
-            interactionSource = inteeractionSource
-            )
+            interactionSource = interactionSource
+        )
     }
 }
 
-
-fun Modifier.searchBarBorder() = composed {
-    if (!isSystemInDarkTheme()){
+fun Modifier.searchBar(): Modifier = composed {
+    if (!isSystemInDarkTheme()) {
         border(
             width = 1.dp,
             color = Color.Black,
             shape = MaterialTheme.shapes.medium
         )
-    }else{
+    } else {
         this
     }
 }
 
+@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun SearchBarPreview() {
+    NewsAppWithComposeTheme {
+        SearchBar(text = "", onValueChange = {}, readOnly = false) {
+
+        }
+    }
+}
