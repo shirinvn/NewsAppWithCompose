@@ -41,7 +41,7 @@ fun SearchScreen(
         Spacer(modifier = Modifier.height(MediumPadding))
         state.articles?.let {
             val article= it.collectAsLazyPagingItems()
-            ArticleList(article = article, onClick = {navigateToDetails
+            ArticleList(article = article, onClick = {navigateToDetails(it)
             })
         }
     }

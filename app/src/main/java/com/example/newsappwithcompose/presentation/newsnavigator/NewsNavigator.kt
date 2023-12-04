@@ -20,6 +20,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.newsappwithcompose.R
 import com.example.newsappwithcompose.domain.model.Article
+import com.example.newsappwithcompose.presentation.bookmark.BookMarkScreen
+import com.example.newsappwithcompose.presentation.bookmark.BookMarkViewModel
+import com.example.newsappwithcompose.presentation.details.DetailScreen
+import com.example.newsappwithcompose.presentation.details.DetailsViewModel
 import com.example.newsappwithcompose.presentation.home.HomeScreen
 import com.example.newsappwithcompose.presentation.home.HomeViewModel
 import com.example.newsappwithcompose.presentation.navgraph.Route
@@ -113,9 +117,29 @@ fun NewsNavigator(
                     , event =viewModel::onEvent
                     ,
                     navigateToDetails ={
-                        navigateToDetails(navController, article = )
+                        navigateToDetails(navController, article = it)
 
                     })
+            }
+            composable(route= Route.DetailScreen.route){
+                val viewModel : DetailsViewModel = hiltViewModel()
+                navController.previousBackStackEntry?.savedStateHandle?.get<Article?>("article")?.let { article -> 
+                    DetailScreen(article = article,
+                        event = viewModel::onEvent,
+                        navigateUp = {
+                            navController.navigateUp()
+                        }
+                    )
+                }
+            }
+            composable(route = Route.BookMarkScreen.route){
+                val viewModel: BookMarkViewModel = hiltViewModel()
+                val state= viewModel.state.value
+                BookMarkScreen(state = state, navigateToDetails ={
+                    article ->
+                    navigateToDetails(navController = navController,article=article)
+                } )
+                
             }
         }
     }
