@@ -23,10 +23,10 @@ class BookMarkViewModel @Inject constructor(
     init {
         getArticles()
     }
-    private fun getArticles(){
-        newsCases.selectArticles().onEach {
-            _state.value = _state.value.copy(article = it)
+    private  fun getArticles(){
 
+        newsCases.selectArticles().onEach {
+            _state.value = _state.value.copy(article = it.asReversed())
 
         }.launchIn(viewModelScope)
     }

@@ -3,13 +3,10 @@ package com.example.newsappwithcompose.presentation.details
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.UiComposable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.newsappwithcompose.domain.model.Article
-import com.example.newsappwithcompose.domain.usecase.news.DeleteArticle
 import com.example.newsappwithcompose.domain.usecase.news.NewCases
-import com.example.newsappwithcompose.domain.usecase.news.UpsertArticle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,40 +14,46 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
-    private val getSavedArticleUseCase: GetSavedArticle,
-    private val deleteArticleUseCase: DeleteArticle,
-    private val upsertArticleUseCase: UpsertArticle
-) : ViewModel() {
+    private val newsCases: NewCases
+): ViewModel() {
 
-    var sideEffect by mutableStateOf<UIComponent?>(null)
-        private set
 
-    fun onEvent(event: DetailEvent) {
-        when (event) {
-            is DetailEvent.UpsertDeleteArticle -> {
+
+    var sideEffect by mutableStateOf<String?>( null)
+    private  set
+
+
+    fun onEvent(event: DetailEvent){
+        when(event){
+            is DetailEvent.UpsertDeleteArticle-> {
                 viewModelScope.launch {
-                    val article = getSavedArticleUseCase(url = event.article.url)
-                    if (article == null){
-                        upsertArticle(article = event.article)
+                    val article = newsCases.selectArticle(event.article.url)
+
+                    if (article== null) {
+                        updateArticle(event.article)
                     }else{
-                        deleteArticle(article = event.article)
+                        deleteArticle(event.article)
                     }
                 }
             }
-            is DetailsEvent.RemoveSideEffect ->{
-                sideEffect = null
+            is DetailEvent.RemoveSideEffect -> {
+                sideEffect =null
             }
         }
     }
 
     private suspend fun deleteArticle(article: Article) {
-        deleteArticleUseCase(article = article)
-        sideEffect = UiComponent.Toast("Article deleted")
+        newsCases.upsertArticle(article)
+        sideEffect= "Article Saved"
+
+
     }
 
-    private suspend fun upsertArticle(article: Article) {
-        upsertArticleUseCase(article = article)
-        sideEffect = UIComponent.Toast("Article Inserted")
+    private  suspend fun updateArticle(article: Article) {
+        newsCases.upsertArticle(article)
+        sideEffect= "Article Deleted"
+
     }
+
 
 }

@@ -64,9 +64,10 @@ fun provideNewsApi(): NewsApi{
 
 @Provides
 @Singleton
-fun provideNewsRepository(newsApi: NewsApi)
+fun provideNewsRepository(newsApi: NewsApi,
+                          newsDao: NewsDao)
 : NewsRepository = NewsRepositoryImp(
-    newsApi = newsApi
+    newsApi = newsApi, newsDao = newsDao
 )
 
 @Provides
@@ -79,10 +80,10 @@ fun provideNewsUseCases
         getNews = GetNews(newsRepository =
         newsRepository),
         searchNews = SearchNews(newsRepository),
-        upsertArticle = UpsertArticle(newsDao),
-        deleteArticle = DeleteArticle(newsDao),
-        selectArticles = SelectArticles(newsDao),
-        selectArticle = SelectArticles(newsDao)
+        upsertArticle = UpsertArticle(newsRepository),
+        deleteArticle = DeleteArticle(newsRepository),
+        selectArticles = SelectArticles(newsRepository),
+        selectArticle = SelectArticles(newsRepository)
 
     )
 }
