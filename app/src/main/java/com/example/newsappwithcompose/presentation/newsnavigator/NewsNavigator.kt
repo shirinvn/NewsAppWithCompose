@@ -25,6 +25,8 @@ import com.example.newsappwithcompose.presentation.home.HomeViewModel
 import com.example.newsappwithcompose.presentation.navgraph.Route
 import com.example.newsappwithcompose.presentation.newsnavigator.component.BottomNavigationItem
 import com.example.newsappwithcompose.presentation.newsnavigator.component.NewsBottomNavigation
+import com.example.newsappwithcompose.presentation.search.SearchScreen
+import com.example.newsappwithcompose.presentation.search.SearchViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -97,6 +99,21 @@ fun NewsNavigator(
                         navController = navController, route= Route.SearchScreen.route
                     ) },
                     navigateToDetails ={article ->
+                        navigateToDetails(
+                            navController,
+                            article
+                        )
+                    })
+            }
+            composable(route= Route.SearchScreen.route){
+
+                val viewModel : SearchViewModel = hiltViewModel()
+                val state = viewModel.state.value
+                SearchScreen(state =state
+                    , event =viewModel::onEvent
+                    ,
+                    navigateToDetails ={
+                        navigateToDetails(navController, article = )
 
                     })
             }
@@ -116,7 +133,10 @@ fun navigateTap(navController: NavController, route: String){
 }
 
 private fun navigateToDetails(navController: NavController,article: Article){
-
+    navController.currentBackStackEntry?.savedStateHandle?.set(
+        "article", article
+    )
+    navController.navigate(route = Route.DetailScreen.route)
 }
 
 
