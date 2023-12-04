@@ -15,32 +15,35 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun NewsButton(
     text: String,
-    onClick: ()-> Unit
-){
+    onClick: () -> Unit,
+) {
 
-    Button(onClick =onClick,
+    Button(
+        onClick = onClick,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = Color.White
         ),
         shape = RoundedCornerShape(size = 6.dp)
     ) {
-        Text(text = text,
-            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold)
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
+            color = Color.White
         )
-
     }
 }
 
 @Composable
-fun NewsTextButton(text: String,
-                   onClick: ()-> Unit){
+fun NewsTextButton(
+    text: String,
+    onClick: () -> Unit,
+) {
     TextButton(onClick = onClick) {
-        Text(text = text,
+        Text(
+            text = text,
             style = MaterialTheme.typography.labelMedium.copy(fontWeight = FontWeight.SemiBold),
-            color= Color.White
+            color = Color.Gray
         )
-
     }
-
 }

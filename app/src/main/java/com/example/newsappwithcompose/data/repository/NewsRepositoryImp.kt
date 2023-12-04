@@ -11,21 +11,21 @@ import com.example.newsappwithcompose.domain.model.Article
 import com.example.newsappwithcompose.domain.repository.NewsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
-class NewsRepositoryImp (
-    private val newsApi :NewsApi,
+
+class NewsRepositoryImp @Inject constructor(
+    private val newsApi: NewsApi,
     private val newsDao: NewsDao
-): NewsRepository{
+) : NewsRepository {
+
     override fun getNews(sources: List<String>): Flow<PagingData<Article>> {
-       return Pager(
+        return Pager(
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {
-                NewsPagingSource(
-                    newsApi = newsApi,
-                    soruce = sources.joinToString(separator = ",")
-                )
+                NewsPagingSource(newsApi = newsApi, sources = sources.joinToString(separator = ","))
             }
-       ).flow
+        ).flow
     }
 
     override fun searchNews(searchQuery: String, sources: List<String>): Flow<PagingData<Article>> {
@@ -33,29 +33,27 @@ class NewsRepositoryImp (
             config = PagingConfig(pageSize = 10),
             pagingSourceFactory = {
                 SearchNewsPagingSource(
-                    searchQuery = searchQuery
-                    ,
-                    newsApi = newsApi,
+                    api = newsApi,
+                    searchQuery = searchQuery,
                     sources = sources.joinToString(separator = ",")
                 )
             }
-        ).flow    }
+        ).flow
+    }
 
     override suspend fun upsertArticle(article: Article) {
-
-newsDao.upsert(article)    }
+        newsDao.upsert(article)
+    }
 
     override suspend fun deleteArticle(article: Article) {
-
         newsDao.delete(article)
     }
 
-    override fun selectArticles(): Flow<List<Article>> {
-       return  newsDao.getArticles()
+    override fun getArticles(): Flow<List<Article>> {
+        return newsDao.getArticles()
     }
 
-    override suspend fun selectArticle(url: String): Article? {
-        return newsDao.getArticle(url)
+    override suspend fun getArticle(url: String): Article? {
+        return newsDao.getArticle(url = url)
     }
-
 }

@@ -6,9 +6,10 @@ import androidx.room.TypeConverters
 import com.example.newsappwithcompose.domain.model.Article
 
 
-@Database(entities = [Article::class], version = 2)
+@Database(entities = [Article::class],version = 1,)
 @TypeConverters(NewsTypeConvertor::class)
-abstract class NewsDataBase: RoomDatabase() {
+abstract class NewsDataBase : RoomDatabase() {
 
     abstract val newsDao: NewsDao
+
 }

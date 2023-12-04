@@ -7,16 +7,16 @@ import dagger.Provides
 
 @ProvidedTypeConverter
 class NewsTypeConvertor {
+
     @TypeConverter
-    fun spurceToString(source: Source): String{
+    fun sourceToString(source: Source): String{
         return "${source.id},${source.name}"
     }
 
     @TypeConverter
-    fun stringToSource(source: String) : Source{
-        return source.split(",").let {
-            souerceArray->
-            Source(souerceArray[0], souerceArray[1])
+    fun stringToSource(source: String): Source{
+        return source.split(',').let { sourceArray ->
+            Source(id = sourceArray[0], name = sourceArray[1])
         }
     }
 }
