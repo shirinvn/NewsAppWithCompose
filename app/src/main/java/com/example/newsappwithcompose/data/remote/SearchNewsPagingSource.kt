@@ -25,7 +25,7 @@ class SearchNewsPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Article> {
         val page = params.key ?: 1
         return try {
-            val newsResponse = api.searchNews(searchQuery = searchQuery, source = sources, page = page)
+            val newsResponse = api.searchNews(searchQuery = searchQuery,page = page, sources = sources)
             totalNewsCount += newsResponse.articles.size
             val articles = newsResponse.articles.distinctBy { it.title } //Remove duplicates
 
